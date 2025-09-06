@@ -81,20 +81,23 @@ function CurrentChallenges({ childId }: { childId: string }) {
 }
 
 function PastWins({ childId }: { childId: string }) {
-  const { challenges, progress } = useStore();
-  const list = challenges.filter((ch) => ch.childId === childId && ch.status === 'completed');
+  const { events, challenges } = useStore();
+  const wins = events
+    .filter((e) => e.childId === childId && e.type === 'win')
+    .sort((a, b) => b.at.localeCompare(a.at))
+    .slice(0, 10);
+  const lookup = new Map(challenges.map((c) => [c.id, c.title] as const));
   return (
     <section style={{ marginTop: 32 }}>
       <h2>Past Wins</h2>
-      {list.length === 0 && <p>No wins yet.</p>}
+      {wins.length === 0 && <p>No wins yet.</p>}
       <ul>
-        {list.map((ch) => (
-          <li key={ch.id}>
-            <b>{ch.title}</b> — {progress[ch.id] || 0} wins
+        {wins.map((w) => (
+          <li key={w.id}>
+            <b>{lookup.get(w.challengeId) || 'Challenge'}</b> — {new Date(w.at).toLocaleString()}
           </li>
         ))}
       </ul>
     </section>
   );
 }
-
