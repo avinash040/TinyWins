@@ -28,10 +28,7 @@ jobs:
           pnpm --filter @tinywins/parent-dashboard build
           pnpm --filter @tinywins/tv-app build
           pnpm --filter @tinywins/toy-sim build
-          mkdir -p site site/apps/parent-dashboard site/apps/tv-app site/apps/toy-sim
-          # Root site shows the Parent Dashboard
-          cp -r apps/parent-dashboard/dist/* site/
-          # Also publish each app under /apps/*
+          mkdir -p site/apps/parent-dashboard site/apps/tv-app site/apps/toy-sim
           cp -r apps/parent-dashboard/dist/* site/apps/parent-dashboard/
           cp -r apps/tv-app/dist/* site/apps/tv-app/
           cp -r apps/toy-sim/dist/* site/apps/toy-sim/
