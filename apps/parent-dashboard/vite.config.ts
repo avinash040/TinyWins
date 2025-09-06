@@ -3,5 +3,6 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/TinyWins/apps/parent-dashboard/',
+  // Serve from the repo root on GitHub Pages project site
+  base: '/TinyWins/',
 });
