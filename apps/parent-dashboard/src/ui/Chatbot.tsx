@@ -83,13 +83,13 @@ export function Chatbot({ childId }: { childId: string | null }) {
   }
 
   return (
-    <aside style={{ width: 360, borderLeft: '1px solid #eee', display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <div style={{ padding: 12, borderBottom: '1px solid #eee', display: 'flex', gap: 8 }}>
-        <strong>Assistant</strong>
-        <button onClick={() => onSuggest('new')}>New Challenge</button>
-        <button onClick={() => onSuggest('support')}>Support Tips</button>
+    <div className="chatbot-panel">
+      <div className="chatbot-header">
+        <span>Assistant</span>
+        <button onClick={() => onSuggest('new')}>New</button>
+        <button onClick={() => onSuggest('support')}>Tips</button>
       </div>
-      <div style={{ flex: 1, overflowY: 'auto', padding: 12 }}>
+      <div className="chatbot-messages">
         {messages.map((m) => (
           <div key={m.id} style={{ margin: '8px 0' }}>
             {m.type === 'text' && (
@@ -117,16 +117,15 @@ export function Chatbot({ childId }: { childId: string | null }) {
         ))}
         <div ref={endRef} />
       </div>
-      <form onSubmit={handleSubmit} style={{ padding: 12, borderTop: '1px solid #eee', display: 'flex', gap: 8 }}>
+      <form onSubmit={handleSubmit} className="chatbot-form">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message…"
-          style={{ flex: 1, padding: 8 }}
         />
         <button type="submit">Send</button>
       </form>
-    </aside>
+    </div>
   );
 }
 
