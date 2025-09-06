@@ -10,10 +10,9 @@
   },
   "dependencies": {
     "@tinywins/shared": "workspace:*",
-    "solclientjs": "^10.20.0"
+    "solclientjs": "^10.18.2"
   },
   "devDependencies": {
     "typescript": "^5.6.2"
   }
 }
-
