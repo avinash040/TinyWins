@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Serve from the repo root on GitHub Pages project site
-  base: '/TinyWins/',
+  // Serve from the user site root
+  base: 'https://avinash040.github.io/',
 });
