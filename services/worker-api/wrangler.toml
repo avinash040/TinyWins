@@ -1,0 +1,17 @@
+name = "tinywins-worker-api"
+main = "dist/index.js"
+compatibility_date = "2024-09-09"
+
+[[d1_databases]]
+binding = "DB"                  # available in env.DB
+database_name = "tinywins"
+database_id = "00000000-0000-0000-0000-000000000000" # replace in real env
+
+[[kv_namespaces]]
+binding = "KV"                  # available in env.KV
+id = "00000000000000000000000000000000"             # replace in real env
+
+[vars]
+GEMINI_IMAGE_MODEL = "gemini-2.5-flash-image"
+VEO_MODEL = "veo-3-fast"
+

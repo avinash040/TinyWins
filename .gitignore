@@ -1,0 +1,19 @@
+# dependencies
+node_modules
+.wrangler
+
+# build outputs
+dist
+build
+.turbo
+.parcel-cache
+
+# env
+.env
+.env.*
+.dev.vars
+
+# editor
+.DS_Store
+.vscode
+
