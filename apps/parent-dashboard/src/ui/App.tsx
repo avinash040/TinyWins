@@ -1,23 +1,74 @@
 import React, { useState } from 'react';
 import { useStore } from '../store';
 import { Chatbot } from './Chatbot';
+import './App.css';
 
 export function App() {
   const [selectedChildId, setSelectedChildId] = useState<string | null>(null);
 
   return (
-    <div style={{ display: 'flex', fontFamily: 'system-ui' }}>
-      <div style={{ flex: 1, padding: 16 }}>
-        <h1>TinyWins — Parent Dashboard</h1>
-        <Home onSelectChild={setSelectedChildId} selectedChildId={selectedChildId} />
-        {selectedChildId && (
-          <>
-            <CurrentChallenges childId={selectedChildId} />
-            <PastWins childId={selectedChildId} />
-          </>
-        )}
+    <div className="layout">
+      <Sidebar />
+      <div className="main">
+        <Topbar />
+        <div className="content">
+          <Stats childId={selectedChildId} />
+          <div className="card">
+            <Home onSelectChild={setSelectedChildId} selectedChildId={selectedChildId} />
+          </div>
+          {selectedChildId && (
+            <>
+              <div className="card" style={{ marginTop: 16 }}>
+                <CurrentChallenges childId={selectedChildId} />
+              </div>
+              <div className="card" style={{ marginTop: 16 }}>
+                <PastWins childId={selectedChildId} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
       <Chatbot childId={selectedChildId} />
+    </div>
+  );
+}
+
+function Sidebar() {
+  return (
+    <nav className="sidebar">
+      <div className="logo">✨</div>
+      <a href="#">🏠</a>
+      <a href="#">👩‍💻</a>
+      <a href="#">⚙️</a>
+    </nav>
+  );
+}
+
+function Topbar() {
+  return (
+    <header className="topbar">
+      <h1>TinyWins</h1>
+      <div className="avatar" />
+    </header>
+  );
+}
+
+function Stats({ childId }: { childId: string | null }) {
+  const { events, challenges } = useStore();
+  const wins = events.filter((e) => (!childId || e.childId === childId) && e.type === 'win').length;
+  const activeChallenges = challenges.filter(
+    (c) => (!childId || c.childId === childId) && c.status !== 'completed'
+  ).length;
+  return (
+    <div className="stats-grid">
+      <div className="card">
+        <div className="metric">{wins}</div>
+        <div className="muted">Wins</div>
+      </div>
+      <div className="card">
+        <div className="metric">{activeChallenges}</div>
+        <div className="muted">Active Challenges</div>
+      </div>
     </div>
   );
 }
