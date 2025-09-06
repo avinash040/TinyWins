@@ -8,6 +8,7 @@ export type Challenge = { id: string; childId: string; domain: 'food' | 'math' |
 type State = {
   children: Child[];
   challenges: Challenge[];
+  progress: Record<string, number>;
   loading: boolean;
   createChild: (parentId: string, name: string, avatarStyle: string) => Promise<void>;
   createChallenge: (childId: string, domain: Challenge['domain'], title: string, goal: string) => Promise<void>;
@@ -17,6 +18,7 @@ type State = {
 export const useStore = create<State>((set, get) => ({
   children: [],
   challenges: [],
+  progress: {},
   loading: false,
   async createChild(parentId, name, avatarStyle) {
     set({ loading: true });
@@ -49,6 +51,17 @@ export const useStore = create<State>((set, get) => ({
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ childId, challengeId, type, value }),
+    });
+    set((state) => {
+      const current = state.progress[challengeId] || 0;
+      const progress = { ...state.progress, [challengeId]: current + value };
+      let challenges = state.challenges;
+      if (type === 'win') {
+        challenges = state.challenges.map((ch) =>
+          ch.id === challengeId ? { ...ch, status: 'completed' } : ch
+        );
+      }
+      return { progress, challenges };
     });
   },
 }));
